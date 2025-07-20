@@ -7,6 +7,13 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * Data Transfer Object (DTO) for User information.
+ * This class is used to transfer user data between different layers of the application,
+ * often for requests (e.g., creating a new user, updating user details) or responses.
+ * It includes validation constraints for ensuring data integrity before processing.
+ */
+
 @Data
 @AllArgsConstructor
 public class UserDto {
