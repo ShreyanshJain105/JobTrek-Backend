@@ -17,7 +17,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class UserDto {
-        private String id;
+        private Long id;
         @NotBlank(message = "{user.name.absent}")
         private String name;
         @NotBlank(message = "{user.email.absent}")
