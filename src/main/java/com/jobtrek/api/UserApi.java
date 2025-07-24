@@ -1,6 +1,7 @@
 package com.jobtrek.api;
 
 import com.jobtrek.dto.LoginDTO;
+import com.jobtrek.dto.ResponseDTO;
 import com.jobtrek.dto.UserDto;
 import com.jobtrek.exception.JobPortalException;
 import com.jobtrek.service.UserService;
@@ -28,5 +29,18 @@ public class UserApi {
     @PostMapping("/login")
     public ResponseEntity<UserDto>loginUser(@RequestBody @Valid LoginDTO loginDTO) throws JobPortalException {
         return new ResponseEntity<>(userService.loginUser(loginDTO), HttpStatus.OK);
+    }
+    @PostMapping("/sendOtp/{email}")
+    public ResponseEntity<ResponseDTO>sendOtp(@PathVariable String email) throws Exception {
+       userService.sendOtp(email);
+        return new ResponseEntity<>(new ResponseDTO("OTP sent Successfully."),HttpStatus.OK);
+    }
+
+    @GetMapping("/verifyOtp/{email}/{otp}")
+    public ResponseEntity<ResponseDTO> verifyOtp(
+            @PathVariable String email,
+            @PathVariable String otp) throws JobPortalException {
+        userService.verifyOtp(email,otp);
+        return new ResponseEntity<>(new ResponseDTO("✅ OTP has been verified successfully!"),HttpStatus.OK);
     }
 }

@@ -8,4 +8,8 @@ public interface UserService {
     public UserDto registerUser(UserDto userDto) throws JobPortalException;
 
     public UserDto loginUser(LoginDTO loginDTO) throws JobPortalException;
+
+    public boolean sendOtp(String email)throws Exception;
+
+   public boolean verifyOtp(String email,String otp) throws JobPortalException;
 }
