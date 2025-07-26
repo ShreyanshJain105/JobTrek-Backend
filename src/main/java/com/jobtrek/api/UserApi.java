@@ -41,6 +41,7 @@ public class UserApi {
     @GetMapping("/verifyOtp/{email}/{otp}")
     public ResponseEntity<ResponseDTO> verifyOtp(
             @Email(message = "{user.email.invalid}")
+
             @PathVariable String email,
             @PathVariable @Pattern(regexp ="^[0-9]{6}$", message="{otp.invalid}" ) String otp) throws JobPortalException {
         userService.verifyOtp(email,otp);
