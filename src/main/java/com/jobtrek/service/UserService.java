@@ -1,6 +1,7 @@
 package com.jobtrek.service;
 
 import com.jobtrek.dto.LoginDTO;
+import com.jobtrek.dto.ResponseDTO;
 import com.jobtrek.dto.UserDto;
 import com.jobtrek.exception.JobPortalException;
 
@@ -12,4 +13,6 @@ public interface UserService {
     public boolean sendOtp(String email)throws Exception;
 
    public boolean verifyOtp(String email,String otp) throws JobPortalException;
+
+   public ResponseDTO changePassword( LoginDTO loginDTO) throws JobPortalException;
 }

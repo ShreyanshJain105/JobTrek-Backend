@@ -32,6 +32,10 @@ public class UserApi {
     public ResponseEntity<UserDto>loginUser(@RequestBody @Valid LoginDTO loginDTO) throws JobPortalException {
         return new ResponseEntity<>(userService.loginUser(loginDTO), HttpStatus.OK);
     }
+    @PostMapping("/changePass")
+    public ResponseEntity<ResponseDTO>ChangePassword(@RequestBody @Valid LoginDTO loginDTO) throws JobPortalException {
+        return new ResponseEntity<>(userService.changePassword(loginDTO), HttpStatus.OK);
+    }
     @PostMapping("/sendOtp/{email}")
     public ResponseEntity<ResponseDTO>sendOtp(@PathVariable @Email(message = "{user.email.invalid}") String email) throws Exception {
        userService.sendOtp(email);
