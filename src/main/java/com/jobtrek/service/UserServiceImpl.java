@@ -45,6 +45,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private ProfileService profileService;
+
     /**
      * Registers a new user in the system.
      * Validates that the email is not already registered, generates a unique ID,
@@ -57,15 +60,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto registerUser(UserDto userDto) throws JobPortalException {
-        // Check if user with this email already exists
-        Optional<User> optional=userRepository.findByEmail(userDto.getEmail());
+
+        Optional<User> optional=userRepository.findByEmail(userDto.getEmail());            // Check if user with this email already exists
         if(optional.isPresent())throw new JobPortalException("USER_FOUND");
-        // Generate unique sequence ID for the new user
-        userDto.setId(Utilities.getNextSequence("users"));
-        // Encrypt the password before storing
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        // Convert DTO to entity and save to database
-        User user =userDto.toEntity();
+        userDto.setProfileId(profileService.createProfile(userDto.getEmail()));
+        userDto.setId(Utilities.getNextSequence("users"));                               // Generate unique sequence ID for the new user
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));                 // Encrypt the password before storing
+        User user =userDto.toEntity();                                                     // Convert DTO to entity and save to database
         user=userRepository.save(user);
         return user.toDTO();  // Return the saved user as DTO
     }

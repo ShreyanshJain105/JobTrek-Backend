@@ -22,6 +22,7 @@ public class User {
     private String email;
     private String password;
     private AccountType accountType;
+    private Long profileId;
 
     public UserDto toDTO(){
         return new UserDto(
@@ -29,7 +30,8 @@ public class User {
                 this.name,
                 this.email,
                 this.password,
-                this.accountType);
+                this.accountType,
+                this.profileId);
 
     }
 }
