@@ -1,6 +1,6 @@
 package com.jobtrek.entity;
 
-import com.jobtrek.dto.Applicant;
+
 import com.jobtrek.dto.JobDTO;
 import com.jobtrek.dto.JobStatus;
 import lombok.AllArgsConstructor;
@@ -29,15 +29,15 @@ public class Job {
     private Long packageOffered;
     private LocalDateTime postTime;
     private String description;
-    private List<String>skillsRequired;
+    private List<String> skillsRequired;
     private JobStatus jobStatus;
 
-    public JobDTO toDTO(){
+    public JobDTO toDTO() {
         return new JobDTO(
                 this.id,
                 this.jobTitle,
                 this.company,
-                this.applicants,
+                this.applicants != null ? this.applicants.stream().map((x) -> x.toDTO()).toList() : null,
                 this.about,
                 this.experience,
                 this.jobType,
