@@ -28,6 +28,7 @@ public class Profile {
     private List<String>skills;
     private List<Experience>experiences;
     private List<Certification>certifications;
+    private List<Long>savedJobs;
 
     public ProfileDTO toDTO() {
         return new ProfileDTO(
@@ -40,7 +41,8 @@ public class Profile {
                 this.picture != null ? Base64.getEncoder().encodeToString(this.picture) : null, // Corrected position
                 this.skills,
                 this.experiences,
-                this.certifications
+                this.certifications,
+                this.savedJobs
         );
     }
 

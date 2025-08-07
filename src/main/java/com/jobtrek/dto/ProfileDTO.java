@@ -24,6 +24,7 @@ public class ProfileDTO {
     private List<String> skills;
     private List<Experience>experiences;
     private List<Certification>certifications;
+    private List<Long>savedJobs;
 
     public Profile toEntity() {
         return new Profile(
@@ -36,7 +37,8 @@ public class ProfileDTO {
                 this.picture != null ? Base64.getDecoder().decode(this.picture) : null, // Corrected position
                 this.skills,
                 this.experiences,
-                this.certifications
+                this.certifications,
+                this.savedJobs
         );
     }
 
