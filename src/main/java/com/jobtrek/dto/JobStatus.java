@@ -1,7 +1,7 @@
 package com.jobtrek.dto;
 
 public enum JobStatus {
-    OPEN ,
+    ACTIVE ,
     CLOSED ,
     DRAFT
 }
