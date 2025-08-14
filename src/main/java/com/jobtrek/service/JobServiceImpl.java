@@ -58,7 +58,8 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<JobDTO> getJobsPostedBy(Long id) {
-        return jobRepository.findByPostedBy(id).stream().map((x)->x.toDTO()).toList();
+        return jobRepository.findByPostedBy(id).stream().map
+                ((x)->x.toDTO()).toList();
 
     }
 
