@@ -24,7 +24,7 @@ public class User {
     private AccountType accountType;
     private Long profileId;
 
-    public UserDto toDTO(){
+    public UserDto toDTO() {
         return new UserDto(
                 this.id,
                 this.name,

@@ -32,22 +32,22 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<JobDTO> getAllJobs() {
-        return jobRepository.findAll().stream().map((x)->x.toDTO()).toList();
+        return jobRepository.findAll().stream().map((x) -> x.toDTO()).toList();
     }
 
     @Override
     public JobDTO getJob(Long id) throws JobPortalException {
-        return jobRepository.findById(id).orElseThrow(()->new
+        return jobRepository.findById(id).orElseThrow(() -> new
                 JobPortalException("JOB_NOT_FOUND")).toDTO();
     }
 
     @Override
     public void applyJob(Long id, ApplicantDTO applicantDTO) throws JobPortalException {
-        Job job=jobRepository.findById(id).orElseThrow(()->new
+        Job job = jobRepository.findById(id).orElseThrow(() -> new
                 JobPortalException("JOB_NOT_FOUND"));
-        List<Applicant>applicants=job.getApplicants();
-        if(applicants==null)applicants=new ArrayList<>();
-        if(applicants.stream().filter((x)->x.getApplicantId()==applicantDTO.getApplicantId()).toList().size()>0)
+        List<Applicant> applicants = job.getApplicants();
+        if (applicants == null) applicants = new ArrayList<>();
+        if (applicants.stream().filter((x) -> x.getApplicantId() == applicantDTO.getApplicantId()).toList().size() > 0)
             throw new JobPortalException("JOB_APPLIED_ALREADY");
         applicantDTO.setApplicationStatus(ApplicationStatus.APPLIED);
         applicants.add(applicantDTO.toEntity());
@@ -59,18 +59,19 @@ public class JobServiceImpl implements JobService {
     @Override
     public List<JobDTO> getJobsPostedBy(Long id) {
         return jobRepository.findByPostedBy(id).stream().map
-                ((x)->x.toDTO()).toList();
+                ((x) -> x.toDTO()).toList();
 
     }
 
     @Override
     public void changeAppStatus(Application application) throws JobPortalException {
-        Job job=jobRepository.findById(application.getId()).orElseThrow(()->new
+        Job job = jobRepository.findById(application.getId()).orElseThrow(() -> new
                 JobPortalException("JOB_NOT_FOUND"));
-        List<Applicant>applicants=job.getApplicants().stream().map((x)->{
-            if(application.getApplicantId()==x.getApplicantId()){
+        List<Applicant> applicants = job.getApplicants().stream().map((x) -> {
+            if (application.getApplicantId() == x.getApplicantId()) {
                 x.setApplicationStatus(application.getApplicationStatus());
-                if(application.getApplicationStatus().equals(ApplicationStatus.INTERVIEWING))x.setInterviewTime(application.getInterviewTime());
+                if (application.getApplicationStatus().equals(ApplicationStatus.INTERVIEWING))
+                    x.setInterviewTime(application.getInterviewTime());
             }
             return x;
         }).toList();
