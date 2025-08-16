@@ -2,11 +2,9 @@ package com.jobtrek.api;
 
 
 import com.jobtrek.dto.ProfileDTO;
-import com.jobtrek.dto.ResponseDTO;
+import java.util.*;
 import com.jobtrek.exception.JobPortalException;
 import com.jobtrek.service.ProfileService;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +30,12 @@ public class ProfileApi {
     public ResponseEntity<ProfileDTO> updateProfile(@RequestBody ProfileDTO profileDTO) throws JobPortalException {
         return new ResponseEntity<>(profileService.updateprofile(profileDTO), HttpStatus.OK);
     }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<ProfileDTO>> getAllProfiles() throws JobPortalException {
+        return new ResponseEntity<>(profileService.getAllprofiles(), HttpStatus.OK);
+    }
+
 
 
 }
