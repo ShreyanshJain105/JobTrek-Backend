@@ -19,16 +19,18 @@ public class ProfileServiceImpl implements ProfileService {
     private ProfileRepository profileRepository;
 
     @Override
-    public Long createProfile(String email) throws JobPortalException {
+    public Long createProfile(String email, String name) throws JobPortalException {
         Profile profile = new Profile();
         profile.setId(Utilities.getNextSequence("profiles"));
         profile.setEmail(email);
+        profile.setName(name); // 👈 Set name here
         profile.setSkills(new ArrayList<>());
         profile.setExperiences(new ArrayList<>());
         profile.setCertifications(new ArrayList<>());
         profileRepository.save(profile);
         return profile.getId();
     }
+
 
     @Override
     public ProfileDTO getprofile(Long id) throws JobPortalException {

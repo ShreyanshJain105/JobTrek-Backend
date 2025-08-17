@@ -6,7 +6,7 @@ import com.jobtrek.exception.JobPortalException;
 import java.util.List;
 
 public interface ProfileService {
-    public Long createProfile(String email) throws JobPortalException;
+    public Long createProfile(String email,String name) throws JobPortalException;
 
     public ProfileDTO getprofile(Long id) throws JobPortalException;
 

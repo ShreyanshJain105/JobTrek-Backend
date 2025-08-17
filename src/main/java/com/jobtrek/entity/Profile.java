@@ -27,6 +27,7 @@ public class Profile {
     private String location;
     private String about;
     private byte[] picture;
+    private Long totalExp;
     private List<String> skills;
     private List<Experience> experiences;
     private List<Certification> certifications;
@@ -42,6 +43,7 @@ public class Profile {
                 this.location,
                 this.about,
                 this.picture != null ? Base64.getEncoder().encodeToString(this.picture) : null, // Corrected position
+                this.totalExp,
                 this.skills,
                 this.experiences,
                 this.certifications,

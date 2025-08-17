@@ -1,10 +1,6 @@
 package com.jobtrek.api;
 
-
 import com.jobtrek.dto.ProfileDTO;
-
-import java.util.*;
-
 import com.jobtrek.exception.JobPortalException;
 import com.jobtrek.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -22,6 +20,10 @@ public class ProfileApi {
     @Autowired
     private ProfileService profileService;
 
+    @PostMapping("/create")
+    public ResponseEntity<Long> createProfile(@RequestParam String email, @RequestParam String name) throws JobPortalException {
+        return new ResponseEntity<>(profileService.createProfile(email, name), HttpStatus.CREATED);
+    }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<ProfileDTO> getProfile(@PathVariable Long id) throws JobPortalException {
@@ -37,6 +39,4 @@ public class ProfileApi {
     public ResponseEntity<List<ProfileDTO>> getAllProfiles() throws JobPortalException {
         return new ResponseEntity<>(profileService.getAllprofiles(), HttpStatus.OK);
     }
-
-
 }

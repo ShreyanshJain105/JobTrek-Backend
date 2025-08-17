@@ -22,6 +22,7 @@ public class ProfileDTO {
     private String location;
     private String about;
     private String picture;
+    private Long totalExp;
     private List<String> skills;
     private List<Experience> experiences;
     private List<Certification> certifications;
@@ -36,11 +37,13 @@ public class ProfileDTO {
                 this.company,
                 this.location,
                 this.about,
-                this.picture != null ? Base64.getDecoder().decode(this.picture) : null, // Corrected position
+                this.picture != null ? Base64.getDecoder().decode(this.picture) : null,
+                this.totalExp,
                 this.skills,
                 this.experiences,
                 this.certifications,
                 this.savedJobs
+
         );
     }
 

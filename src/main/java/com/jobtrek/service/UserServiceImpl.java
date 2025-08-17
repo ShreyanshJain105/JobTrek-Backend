@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
         Optional<User> optional = userRepository.findByEmail(userDto.getEmail());            // Check if user with this email already exists
         if (optional.isPresent()) throw new JobPortalException("USER_FOUND");
-        userDto.setProfileId(profileService.createProfile(userDto.getEmail()));
+        userDto.setProfileId(profileService.createProfile(userDto.getEmail(),userDto.getName()));
         userDto.setId(Utilities.getNextSequence("users"));                               // Generate unique sequence ID for the new user
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));                 // Encrypt the password before storing
         User user = userDto.toEntity();                                                     // Convert DTO to entity and save to database

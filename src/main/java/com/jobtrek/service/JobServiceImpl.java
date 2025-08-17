@@ -1,9 +1,6 @@
 package com.jobtrek.service;
 
-import com.jobtrek.dto.ApplicantDTO;
-import com.jobtrek.dto.Application;
-import com.jobtrek.dto.ApplicationStatus;
-import com.jobtrek.dto.JobDTO;
+import com.jobtrek.dto.*;
 import com.jobtrek.entity.Applicant;
 import com.jobtrek.entity.Job;
 import com.jobtrek.exception.JobPortalException;
@@ -25,9 +22,20 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public JobDTO postJob(JobDTO jobDTO) throws JobPortalException {
-        jobDTO.setId(Utilities.getNextSequence("jobs"));
-        jobDTO.setPostTime(LocalDateTime.now());
+        if (jobDTO.getId() == 0) {
+            jobDTO.setId(Utilities.getNextSequence("jobs"));
+            jobDTO.setPostTime(LocalDateTime.now());
+
+        } else {
+            Job job = jobRepository.findById(jobDTO.getId()).orElseThrow(() -> new
+                    JobPortalException("JOB_NOT_FOUND"));
+            if (job.getJobStatus().
+                    equals(JobStatus.DRAFT) || jobDTO.
+                    getJobStatus().
+                    equals(JobStatus.CLOSED)) jobDTO.setPostTime(LocalDateTime.now());
+        }
         return jobRepository.save(jobDTO.toEntity()).toDTO();
+
     }
 
     @Override
