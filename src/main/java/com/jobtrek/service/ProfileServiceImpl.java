@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service("profileService")
-public class ProfileServiceImpl implements ProfileService{
+public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
     private ProfileRepository profileRepository;
@@ -32,20 +32,20 @@ public class ProfileServiceImpl implements ProfileService{
 
     @Override
     public ProfileDTO getprofile(Long id) throws JobPortalException {
-        return profileRepository.findById(id).orElseThrow(()->new
+        return profileRepository.findById(id).orElseThrow(() -> new
                 JobPortalException("PROFILE_NOT_FOUND")).toDTO();
     }
 
     @Override
     public ProfileDTO updateprofile(ProfileDTO profileDTO) throws JobPortalException {
-      profileRepository.findById(profileDTO.getId()).orElseThrow(()->new
+        profileRepository.findById(profileDTO.getId()).orElseThrow(() -> new
                 JobPortalException("PROFILE_NOT_FOUND"));
-      profileRepository.save(profileDTO.toEntity());
-      return profileDTO;
+        profileRepository.save(profileDTO.toEntity());
+        return profileDTO;
     }
 
     @Override
     public List<ProfileDTO> getAllprofiles() {
-        return profileRepository.findAll().stream().map((x)->x.toDTO()).toList();
+        return profileRepository.findAll().stream().map((x) -> x.toDTO()).toList();
     }
 }

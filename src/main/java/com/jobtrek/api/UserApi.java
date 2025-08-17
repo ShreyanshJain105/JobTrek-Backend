@@ -24,22 +24,25 @@ public class UserApi {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto>registerUser(@RequestBody @Valid UserDto userDto) throws JobPortalException {
-        userDto =userService.registerUser(userDto);
+    public ResponseEntity<UserDto> registerUser(@RequestBody @Valid UserDto userDto) throws JobPortalException {
+        userDto = userService.registerUser(userDto);
         return new ResponseEntity<>(userDto, HttpStatus.CREATED);
     }
+
     @PostMapping("/login")
-    public ResponseEntity<UserDto>loginUser(@RequestBody @Valid LoginDTO loginDTO) throws JobPortalException {
+    public ResponseEntity<UserDto> loginUser(@RequestBody @Valid LoginDTO loginDTO) throws JobPortalException {
         return new ResponseEntity<>(userService.loginUser(loginDTO), HttpStatus.OK);
     }
+
     @PostMapping("/changePass")
-    public ResponseEntity<ResponseDTO>ChangePassword(@RequestBody @Valid LoginDTO loginDTO) throws JobPortalException {
+    public ResponseEntity<ResponseDTO> ChangePassword(@RequestBody @Valid LoginDTO loginDTO) throws JobPortalException {
         return new ResponseEntity<>(userService.changePassword(loginDTO), HttpStatus.OK);
     }
+
     @PostMapping("/sendOtp/{email}")
-    public ResponseEntity<ResponseDTO>sendOtp(@PathVariable @Email(message = "{user.email.invalid}") String email) throws Exception {
-       userService.sendOtp(email);
-        return new ResponseEntity<>(new ResponseDTO("OTP sent Successfully."),HttpStatus.OK);
+    public ResponseEntity<ResponseDTO> sendOtp(@PathVariable @Email(message = "{user.email.invalid}") String email) throws Exception {
+        userService.sendOtp(email);
+        return new ResponseEntity<>(new ResponseDTO("OTP sent Successfully."), HttpStatus.OK);
     }
 
     @GetMapping("/verifyOtp/{email}/{otp}")
@@ -47,8 +50,8 @@ public class UserApi {
             @Email(message = "{user.email.invalid}")
 
             @PathVariable String email,
-            @PathVariable @Pattern(regexp ="^[0-9]{6}$", message="{otp.invalid}" ) String otp) throws JobPortalException {
-        userService.verifyOtp(email,otp);
-        return new ResponseEntity<>(new ResponseDTO("✅ OTP has been verified successfully!"),HttpStatus.OK);
+            @PathVariable @Pattern(regexp = "^[0-9]{6}$", message = "{otp.invalid}") String otp) throws JobPortalException {
+        userService.verifyOtp(email, otp);
+        return new ResponseEntity<>(new ResponseDTO("✅ OTP has been verified successfully!"), HttpStatus.OK);
     }
 }

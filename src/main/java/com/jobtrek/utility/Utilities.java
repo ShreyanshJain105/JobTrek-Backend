@@ -19,23 +19,25 @@ public class Utilities {
 
 
     @Autowired
-    public void setMongoOperations(MongoOperations mongoOperations){
-        Utilities.mongoOperations=mongoOperations;
+    public void setMongoOperations(MongoOperations mongoOperations) {
+        Utilities.mongoOperations = mongoOperations;
     }
-    public static Long getNextSequence(String key) throws JobPortalException{
+
+    public static Long getNextSequence(String key) throws JobPortalException {
         Query query = new Query(Criteria.where("_id").is(key));
         Update update = new Update();
-        update.inc("seq",1);
+        update.inc("seq", 1);
         FindAndModifyOptions options = new FindAndModifyOptions();
         options.returnNew(true);
-        Sequence seq=mongoOperations.findAndModify(query,update,options,Sequence.class);
-        if(seq==null)throw new JobPortalException("Unable to get sequence if for key : "+key);
+        Sequence seq = mongoOperations.findAndModify(query, update, options, Sequence.class);
+        if (seq == null) throw new JobPortalException("Unable to get sequence if for key : " + key);
         return seq.getSeq();
     }
-    public static String generateOTP(){
-        StringBuilder otp=new StringBuilder();
+
+    public static String generateOTP() {
+        StringBuilder otp = new StringBuilder();
         SecureRandom random = new SecureRandom();
-        for(int i=0;i<6;i++)otp.append(random.nextInt(10));
+        for (int i = 0; i < 6; i++) otp.append(random.nextInt(10));
         return otp.toString();
     }
 }

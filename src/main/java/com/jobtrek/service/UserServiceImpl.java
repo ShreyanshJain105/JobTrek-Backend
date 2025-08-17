@@ -61,13 +61,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto registerUser(UserDto userDto) throws JobPortalException {
 
-        Optional<User> optional=userRepository.findByEmail(userDto.getEmail());            // Check if user with this email already exists
-        if(optional.isPresent())throw new JobPortalException("USER_FOUND");
+        Optional<User> optional = userRepository.findByEmail(userDto.getEmail());            // Check if user with this email already exists
+        if (optional.isPresent()) throw new JobPortalException("USER_FOUND");
         userDto.setProfileId(profileService.createProfile(userDto.getEmail()));
         userDto.setId(Utilities.getNextSequence("users"));                               // Generate unique sequence ID for the new user
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));                 // Encrypt the password before storing
-        User user =userDto.toEntity();                                                     // Convert DTO to entity and save to database
-        user=userRepository.save(user);
+        User user = userDto.toEntity();                                                     // Convert DTO to entity and save to database
+        user = userRepository.save(user);
         return user.toDTO();  // Return the saved user as DTO
     }
 
@@ -103,21 +103,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean sendOtp(String email) throws Exception {
         // Verify user exists with the provided email
-        User user =userRepository.findByEmail(email).orElseThrow(() ->
+        User user = userRepository.findByEmail(email).orElseThrow(() ->
                 new JobPortalException("USER_NOT_FOUND"));
         // Create MIME message for HTML email
-        MimeMessage mm= mailSender.createMimeMessage();
-        MimeMessageHelper message = new MimeMessageHelper(mm,true);
+        MimeMessage mm = mailSender.createMimeMessage();
+        MimeMessageHelper message = new MimeMessageHelper(mm, true);
         // Set email recipient and subject
         message.setTo(email);
         message.setSubject("Your OTP Code");
-        String genOTP=Utilities.generateOTP(); // Generate random OTP code
-        OTP otp=new OTP(email,genOTP, LocalDateTime.now());   // Create and save OTP entity with current timestamp
+        String genOTP = Utilities.generateOTP(); // Generate random OTP code
+        OTP otp = new OTP(email, genOTP, LocalDateTime.now());   // Create and save OTP entity with current timestamp
         otpRepository.save(otp);
-        message.setText(Data.getMessageBody(genOTP,user.getName()),true);  // Set email body with personalized message containing OTP
+        message.setText(Data.getMessageBody(genOTP, user.getName()), true);  // Set email body with personalized message containing OTP
         mailSender.send(mm);  // Send the email
         return true;
-
 
 
     }
@@ -127,17 +126,17 @@ public class UserServiceImpl implements UserService {
      * Validates that OTP exists for the email and matches the provided code.
      *
      * @param email User's email address
-     * @param otp OTP code to verify
+     * @param otp   OTP code to verify
      * @return boolean true if OTP is valid
      * @throws JobPortalException if OTP not found or incorrect
      */
 
     @Override
-    public boolean verifyOtp(String email,String otp) throws JobPortalException {
+    public boolean verifyOtp(String email, String otp) throws JobPortalException {
         // Retrieve OTP record for the email, throw exception if not found
-        OTP otpEntity =otpRepository.findById(email).orElseThrow(()->new JobPortalException("OTP_Not_Found!"));
+        OTP otpEntity = otpRepository.findById(email).orElseThrow(() -> new JobPortalException("OTP_Not_Found!"));
         // Compare provided OTP with stored OTP code
-        if(!otpEntity.getOtpCode().equals(otp))throw new JobPortalException("OTP_Incorrect");
+        if (!otpEntity.getOtpCode().equals(otp)) throw new JobPortalException("OTP_Incorrect");
         return true;
     }
 
@@ -153,7 +152,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseDTO changePassword(LoginDTO loginDTO) throws JobPortalException {
         // Find user by email, throw exception if not found
-        User user =userRepository.findByEmail(loginDTO.getEmail()).orElseThrow(() -> new JobPortalException("USER_NOT_FOUND"));
+        User user = userRepository.findByEmail(loginDTO.getEmail()).orElseThrow(() -> new JobPortalException("USER_NOT_FOUND"));
         // Encrypt and set the new password
         user.setPassword(passwordEncoder.encode(loginDTO.getPassword()));
         // Save updated user information
@@ -168,15 +167,15 @@ public class UserServiceImpl implements UserService {
      * This prevents database bloat and ensures OTPs have limited validity period.
      */
     @Scheduled(fixedRate = 60000)
-    public void removeExpiredOTPs(){
+    public void removeExpiredOTPs() {
         // Calculate expiry time (5 minutes ago from current time)
-        LocalDateTime expiry= LocalDateTime.now().minusMinutes(5);
+        LocalDateTime expiry = LocalDateTime.now().minusMinutes(5);
         // Find all OTPs created before the expiry time
-        List<OTP>expiredOTPs=otpRepository.findByCreationTimeBefore(expiry);
+        List<OTP> expiredOTPs = otpRepository.findByCreationTimeBefore(expiry);
         // Delete expired OTPs if any exist
-        if(!expiredOTPs.isEmpty()){
+        if (!expiredOTPs.isEmpty()) {
             otpRepository.deleteAll(expiredOTPs);
-            System.out.println("Removed "+expiredOTPs.size()+" expired OTPs");
+            System.out.println("Removed " + expiredOTPs.size() + " expired OTPs");
 
         }
 

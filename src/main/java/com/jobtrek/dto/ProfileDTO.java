@@ -23,9 +23,9 @@ public class ProfileDTO {
     private String about;
     private String picture;
     private List<String> skills;
-    private List<Experience>experiences;
-    private List<Certification>certifications;
-    private List<Long>savedJobs;
+    private List<Experience> experiences;
+    private List<Certification> certifications;
+    private List<Long> savedJobs;
 
     public Profile toEntity() {
         return new Profile(

@@ -1,7 +1,7 @@
 package com.jobtrek.utility;
 
 public class Data {
-    public static String getMessageBody(String otp,String name) {
+    public static String getMessageBody(String otp, String name) {
         return "<!DOCTYPE html>" +
                 "<html lang=\"en\">" +
                 "<head>" +
@@ -191,7 +191,7 @@ public class Data {
                 "            <h1 class=\"company-name\">JOBTREK</h1>" +
                 "        </div>" +
                 "        <div class=\"content\">" +
-                "            <h2>🔐 Secure Your Account : "+name+"</h2>" +
+                "            <h2>🔐 Secure Your Account : " + name + "</h2>" +
                 "            <p>We're excited to have you with us! Use the <span class=\"highlight\">One-Time Password (OTP)</span> below to verify your account:</p>" +
                 "            <div class=\"otp\">" + otp + "</div>" +
                 "            <p>⏰ This OTP is valid for <strong>10 minutes</strong>. For your security, please do not share it with anyone.</p>" +

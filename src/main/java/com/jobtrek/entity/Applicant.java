@@ -25,7 +25,7 @@ public class Applicant {
     private LocalDateTime interviewTime;
 
     public ApplicantDTO toDTO() {
-        return new ApplicantDTO( this.applicantId,
+        return new ApplicantDTO(this.applicantId,
                 this.name,
                 this.email,
                 this.phone,

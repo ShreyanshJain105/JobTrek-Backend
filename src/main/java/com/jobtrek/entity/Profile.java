@@ -2,6 +2,7 @@ package com.jobtrek.entity;
 
 import java.util.*;
 import java.util.List;
+
 import com.jobtrek.dto.Certification;
 import com.jobtrek.dto.Experience;
 import com.jobtrek.dto.ProfileDTO;
@@ -26,10 +27,10 @@ public class Profile {
     private String location;
     private String about;
     private byte[] picture;
-    private List<String>skills;
-    private List<Experience>experiences;
-    private List<Certification>certifications;
-    private List<Long>savedJobs;
+    private List<String> skills;
+    private List<Experience> experiences;
+    private List<Certification> certifications;
+    private List<Long> savedJobs;
 
     public ProfileDTO toDTO() {
         return new ProfileDTO(

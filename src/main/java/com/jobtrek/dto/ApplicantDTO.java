@@ -24,7 +24,7 @@ public class ApplicantDTO {
     private LocalDateTime interviewTime;
 
     public Applicant toEntity() {
-        return new Applicant( this.applicantId,
+        return new Applicant(this.applicantId,
                 this.name,
                 this.email,
                 this.phone,

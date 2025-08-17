@@ -17,22 +17,22 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class UserDto {
-        private Long id;
-        @NotBlank(message = "{user.name.absent}")
-        private String name;
-        @NotBlank(message = "{user.email.absent}")
-        @Email(message = "{user.email.invalid}")
-        private String email;
-        @NotBlank(message = "{user.password.absent}")
-        @Pattern(
-                regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$",
-                message = "{user.password.invalid}"
-        )
-        private String password;
-        private AccountType accountType;
-        private Long profileId;
+    private Long id;
+    @NotBlank(message = "{user.name.absent}")
+    private String name;
+    @NotBlank(message = "{user.email.absent}")
+    @Email(message = "{user.email.invalid}")
+    private String email;
+    @NotBlank(message = "{user.password.absent}")
+    @Pattern(
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$",
+            message = "{user.password.invalid}"
+    )
+    private String password;
+    private AccountType accountType;
+    private Long profileId;
 
-    public User toEntity(){
+    public User toEntity() {
         return new User(this.id,
                 this.name,
                 this.email,

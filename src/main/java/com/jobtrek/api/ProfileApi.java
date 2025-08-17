@@ -2,7 +2,9 @@ package com.jobtrek.api;
 
 
 import com.jobtrek.dto.ProfileDTO;
+
 import java.util.*;
+
 import com.jobtrek.exception.JobPortalException;
 import com.jobtrek.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,6 @@ public class ProfileApi {
     public ResponseEntity<List<ProfileDTO>> getAllProfiles() throws JobPortalException {
         return new ResponseEntity<>(profileService.getAllprofiles(), HttpStatus.OK);
     }
-
 
 
 }

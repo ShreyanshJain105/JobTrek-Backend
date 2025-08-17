@@ -20,15 +20,17 @@ public class ExceptionControllerAdvice {
 
     @Autowired
     private Environment environment;
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorInfo> generalException(Exception exception) {
         ErrorInfo error = new ErrorInfo(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @ExceptionHandler(JobPortalException.class)
     public ResponseEntity<ErrorInfo> generalException(JobPortalException exception) {
-        String msg=environment.getProperty(exception.getMessage());
-        ErrorInfo error = new ErrorInfo(msg,HttpStatus.INTERNAL_SERVER_ERROR.value(), LocalDateTime.now());
+        String msg = environment.getProperty(exception.getMessage());
+        ErrorInfo error = new ErrorInfo(msg, HttpStatus.INTERNAL_SERVER_ERROR.value(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

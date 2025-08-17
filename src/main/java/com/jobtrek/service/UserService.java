@@ -10,9 +10,9 @@ public interface UserService {
 
     public UserDto loginUser(LoginDTO loginDTO) throws JobPortalException;
 
-    public boolean sendOtp(String email)throws Exception;
+    public boolean sendOtp(String email) throws Exception;
 
-   public boolean verifyOtp(String email,String otp) throws JobPortalException;
+    public boolean verifyOtp(String email, String otp) throws JobPortalException;
 
-   public ResponseDTO changePassword( LoginDTO loginDTO) throws JobPortalException;
+    public ResponseDTO changePassword(LoginDTO loginDTO) throws JobPortalException;
 }
