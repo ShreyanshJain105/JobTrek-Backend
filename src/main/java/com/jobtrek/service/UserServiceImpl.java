@@ -5,11 +5,14 @@
 package com.jobtrek.service;
 
 import com.jobtrek.dto.LoginDTO;
+import com.jobtrek.dto.NotificationDTO;
 import com.jobtrek.dto.ResponseDTO;
 import com.jobtrek.dto.UserDto;
+import com.jobtrek.entity.Notification;
 import com.jobtrek.entity.OTP;
 import com.jobtrek.entity.User;
 import com.jobtrek.exception.JobPortalException;
+import com.jobtrek.repository.NotificationRepository;
 import com.jobtrek.repository.OTPRepository;
 import com.jobtrek.repository.UserRepository;
 import com.jobtrek.utility.Data;
@@ -47,6 +50,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ProfileService profileService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     /**
      * Registers a new user in the system.
@@ -157,6 +163,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(loginDTO.getPassword()));
         // Save updated user information
         userRepository.save(user);
+        NotificationDTO notification= new NotificationDTO();
+        notification.setUserId(user.getId());
+        notification.setMessage("Password Reset Successfull");
+        notification.setAction("Password Reset");
+        notificationService.sendNotification(notification);
         return new ResponseDTO("Password changed Successfully!");// Return success response
     }
 

@@ -19,12 +19,20 @@ public class JobServiceImpl implements JobService {
 
     @Autowired
     private JobRepository jobRepository;
+    @Autowired
+    private NotificationService notificationService;
 
     @Override
     public JobDTO postJob(JobDTO jobDTO) throws JobPortalException {
         if (jobDTO.getId() == 0) {
             jobDTO.setId(Utilities.getNextSequence("jobs"));
             jobDTO.setPostTime(LocalDateTime.now());
+            NotificationDTO notiDto=new NotificationDTO();
+            notiDto.setAction("Job Posted Successfully");
+            notiDto.setMessage("Job Posted Successfully for "+jobDTO.getJobTitle()+"at "+jobDTO.getCompany());
+            notiDto.setUserId(jobDTO.getPostedBy());
+            notiDto.setRoute("/posted-jobs/"+jobDTO.getId());
+            notificationService.sendNotification(notiDto);
 
         } else {
             Job job = jobRepository.findById(jobDTO.getId()).orElseThrow(() -> new
@@ -80,6 +88,18 @@ public class JobServiceImpl implements JobService {
                 x.setApplicationStatus(application.getApplicationStatus());
                 if (application.getApplicationStatus().equals(ApplicationStatus.INTERVIEWING))
                     x.setInterviewTime(application.getInterviewTime());
+                NotificationDTO notiDto=new NotificationDTO();
+                notiDto.setAction("Interview Scheduled");
+                notiDto.setMessage("Interview scheduled for job id : "+application.getId());
+                notiDto.setUserId(application.getApplicantId());
+                notiDto.setRoute("/job-history");
+                try {
+                    notificationService.sendNotification(notiDto);
+                } catch (JobPortalException e) {
+                    throw new RuntimeException(e);
+                }
+
+
             }
             return x;
         }).toList();
