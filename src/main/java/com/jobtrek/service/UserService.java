@@ -8,6 +8,8 @@ import com.jobtrek.exception.JobPortalException;
 public interface UserService {
     public UserDto registerUser(UserDto userDto) throws JobPortalException;
 
+    public UserDto getUserByEmail(String email) throws JobPortalException;
+
     public UserDto loginUser(LoginDTO loginDTO) throws JobPortalException;
 
     public boolean sendOtp(String email) throws Exception;
