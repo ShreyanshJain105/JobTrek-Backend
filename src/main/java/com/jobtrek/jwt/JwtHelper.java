@@ -13,7 +13,8 @@ import java.util.function.Function;
 public class JwtHelper {
 
     private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private static final long JWT_TOKEN_VALIDITY = 3600000; // 1 hour in ms
+    private static final long JWT_TOKEN_VALIDITY = 1000 * 60 * 60 * 4;
+    // 4 hour in ms
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
