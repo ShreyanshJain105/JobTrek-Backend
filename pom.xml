@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jobtrek</groupId>
-	<artifactId>Job-Trek</artifactId>
+	<artifactId>JobTrek</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Job-Trek</name>
+	<name>JobTrek</name>
 	<description>Backend for JobTrek and Complete E2EE Website </description>
 	<url/>
 	<licenses>
