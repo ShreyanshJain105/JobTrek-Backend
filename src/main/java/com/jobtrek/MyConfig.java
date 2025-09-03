@@ -12,7 +12,7 @@ public class MyConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(6);
     }
 
     @Bean
